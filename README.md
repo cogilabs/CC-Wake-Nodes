@@ -1,13 +1,13 @@
 # ComputerCraft Wake Nodes
 
-ComputerCraft Wake Nodes is a Forge mod for Minecraft 1.20.1 that adds a small chunk-loading network for CC: Tweaked computers.
+ComputerCraft Wake Nodes is a Forge mod for Minecraft 1.20.1 that adds a small chunk-loading network for CC: Tweaked (ComputerCraft) computers, particularly useful for automation setups.
 
 It introduces two ComputerCraft peripherals:
 
-- `wake_node`: attached to a ComputerCraft computer and registered under a string ID.
+- `wake_node`: attached to a ComputerCraft computer and registered under a string ID, effectively acting as the chunk loader.
 - `wake_controller`: used by another computer to list, load, unload, and inspect registered nodes.
 
-The main use case is waking distant computer setups long enough for their chunk to tick and for their startup logic to run.
+The main use case is waking distant computer setups long enough for their chunk to load and tick and for their startup logic to run.
 
 It also adds the *Wake Chip*, a crafting component used by the other blocks.
 
@@ -37,15 +37,7 @@ Crafting component used by the other blocks.
 
 Recipe:
 
-```text
-E
-R
-Q
-```
-
-- `E`: Ender Pearl
-- `R`: Redstone
-- `Q`: Quartz
+![Wake chip recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_chip_recipe.png)
 
 Creative tab: Ingredients
 
@@ -66,16 +58,7 @@ Important placement rule:
 
 Recipe:
 
-```text
-i R i
-A C A
-i R i
-```
-
-- `i`: Iron Ingot
-- `R`: Redstone
-- `A`: Amethyst Shard
-- `C`: Wake Chip
+![Wake Node recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_node_recipe.png)
 
 Creative tab: Functional Blocks
 
@@ -92,17 +75,7 @@ What it does:
 
 Recipe:
 
-```text
-g C g
-R M R
-i C i
-```
-
-- `g`: Gold Ingot
-- `C`: ComputerCraft Computer
-- `R`: Redstone
-- `M`: Wake Chip
-- `i`: Iron Ingot
+![Wake chip recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_controller_recipe.png)
 
 Creative tab: Functional Blocks
 
@@ -132,7 +105,7 @@ Find the peripheral with standard ComputerCraft calls such as:
 local wake = peripheral.find("wake_node")
 ```
   
-Check [the API.md file](API.md) for a more compact version of the API documentation.
+Check [the API.md file](https://github.com/cogilabs/CC-Wake-Nodes/blob/main/API.md) on GitHub for a more compact version of the API documentation.
 
 #### `setId(id)`
 
@@ -364,3 +337,10 @@ Common config keys:
 
 The repository includes example Lua scripts in `sampleScripts/recallCreateTrains/` showing how Wake Nodes can be used to wake remote Create station computers and coordinate train recall flows over Rednet.
 
+## License
+
+Code is licensed under the MIT License.
+
+Some bundled assets (textures) are licensed under the ComputerCraft Public License v1.0.0 (CCPL).
+
+See the [LICENSE](https://github.com/cogilabs/CC-Wake-Nodes/blob/main/LICENSE) and [LICENSE-CCPL](https://github.com/cogilabs/CC-Wake-Nodes/blob/main/LICENSE-CCPL.md) files on GitHub for details.
