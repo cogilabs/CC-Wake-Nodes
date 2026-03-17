@@ -81,12 +81,17 @@ Creative tab: Functional Blocks
 
 ## How It Works
 
-1. Place a Wake Node on the face of a ComputerCraft computer.
-2. On that computer, call `setId("some_name")` on the `wake_node` peripheral.
-3. Place a Wake Controller next to another computer.
-4. From the controller computer, call `loadNode("some_name")` or `loadFor("some_name", seconds)`.
+1. Place a Wake Node on the face of a CC: Tweaked computer.
+2. On that computer, call `setId("some_name")` on the `wake_node` peripheral to register the node.  
+   The computer that performs this registration becomes the node owner.
+3. Authorize controller computers with `grantController(computerId)`.
+4. Place a Wake Controller next to another computer.
+5. From the authorized controller computer, call `loadNode("some_name")` or `loadFor("some_name", seconds)`.
 
 The loaded chunk is the computer's chunk, not the Wake Node block's chunk.
+
+Each node has an owner computer and an access control list (ACL) of authorized controller computer IDs.  
+Controller methods only operate on nodes the calling computer is authorized to manage.
 
 Node registrations are saved, but active forced chunks are not. After a server restart, nodes still exist in the registry, but none of them remain loaded until requested again.
 
