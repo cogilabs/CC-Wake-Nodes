@@ -4,10 +4,10 @@ ComputerCraft Wake Nodes is a Forge mod for Minecraft 1.20.1 that adds a small c
 
 It introduces two ComputerCraft peripherals:
 
-- `wake_node`: attached to a ComputerCraft computer and registered under a string ID, effectively acting as the chunk loader.
+- `wake_node`: attached to a ComputerCraft computer and registered under a string ID, effectively serving as the chunk loader.
 - `wake_controller`: used by another computer to list, load, unload, and inspect registered nodes.
 
-The main use case is waking distant computer setups long enough for their chunk to load and tick and for their startup logic to run.
+The main use case is waking distant computer setups long enough for their chunk to load and tick, allowing their startup logic to run.
 
 It also adds the *Wake Chip*, a crafting component used by the other blocks.
 
@@ -75,7 +75,7 @@ What it does:
 
 Recipe:
 
-![Wake chip recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_controller_recipe.png)
+![Wake Controller recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_controller_recipe.png)
 
 Creative tab: Functional Blocks
 
@@ -335,7 +335,7 @@ Common config keys:
 
 ## Sample Scripts
 
-The repository includes example Lua scripts in `sampleScripts/recallCreateTrains/` showing how Wake Nodes can be used to wake remote Create station computers and coordinate train recall flows over Rednet.
+The repository includes example Lua scripts in [`sampleScripts/recallCreateTrains/`](https://github.com/cogilabs/CC-Wake-Nodes/tree/main/sampleScripts/recallCreateTrains) demonstrating how Wake Nodes can wake remote Create station computers and coordinate train recall flows over Rednet.
 
 ## License
 
