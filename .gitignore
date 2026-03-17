@@ -1,0 +1,102 @@
+################################
+# OS
+################################
+
+.DS_Store
+Thumbs.db
+
+################################
+# IDE
+################################
+
+.idea/
+*.iml
+.vscode/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+################################
+# Gradle
+################################
+
+.gradle/
+build/
+out/
+
+# garder le wrapper
+!gradle/wrapper/gradle-wrapper.jar
+
+################################
+# Java
+################################
+
+*.class
+
+################################
+# Logs / temp
+################################
+
+*.log
+*.tmp
+*.swp
+*~
+
+################################
+# Minecraft modding (Forge/Fabric)
+################################
+
+run/
+runs/
+logs/
+
+# MCP / mappings / remapping
+*.srg
+*.tsrg
+*.mappings
+output.srg
+mappings.tsrg
+
+# Forge / NeoForge caches
+forge_cache/
+fg_cache/
+
+################################
+# Generated sources
+################################
+
+generated/
+generated-sources/
+src/generated/
+
+################################
+# ComputerCraft / CC:Tweaked
+################################
+
+_extracted_cct/
+
+################################
+# Local configs / secrets
+################################
+
+local.properties
+.env
+*.keystore
+*.jks
+*.key
+
+################################
+# Misc build artifacts
+################################
+
+dist/
+coverage/
+tmp/
+
+################################
+# Node (si jamais utilisé)
+################################
+
+node_modules/
