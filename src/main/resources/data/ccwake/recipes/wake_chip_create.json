@@ -1,0 +1,88 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:quartz"
+  },
+  "transitionalItem": {
+    "item": "ccwake:incomplete_wake_chip"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        },
+        {
+          "item": "minecraft:redstone"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        },
+        {
+          "item": "minecraft:ender_pearl"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_chip"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "ccwake:wake_chip",
+      "count": 1,
+      "chance": 1
+    },
+    {
+      "item": "ccwake:wake_chip",
+      "count": 2,
+      "chance": 0.25
+    }
+  ],
+  "loops": 1
+}

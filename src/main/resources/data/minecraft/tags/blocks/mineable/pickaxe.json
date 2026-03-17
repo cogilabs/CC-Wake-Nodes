@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "ccwake:wake_node",
+    "ccwake:wake_controller"
+  ]
+}

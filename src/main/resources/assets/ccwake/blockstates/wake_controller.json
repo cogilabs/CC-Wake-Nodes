@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "ccwake:block/wake_controller" },
+    "facing=south": { "model": "ccwake:block/wake_controller", "y": 180 },
+    "facing=west":  { "model": "ccwake:block/wake_controller", "y": 270 },
+    "facing=east":  { "model": "ccwake:block/wake_controller", "y": 90 }
+  }
+}

@@ -1,0 +1,41 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+# Code is MIT; bundled assets (textures) are under the ComputerCraft Public License (CCPL).
+license = "MIT (code); ComputerCraft Public License (assets)"
+
+[[mods]]
+modId = "ccwake"
+version = "${file.jarVersion}"
+displayName = "ComputerCraft Wake Nodes"
+description = '''
+ComputerCraft Wake Nodes is a Forge mod adding wake nodes for CC: Tweaked computers with chunk loading control.
+Place a wake_node against a CC computer to register it as a wake point.
+Use a wake_controller to dynamically load/unload chunks of registered nodes.
+'''
+authors = "0Davgi0 (Cogilabs)"
+credits = "Thanks to the ComputerCraft and Create communities for inspiration."
+displayURL = "https://cogilabs.eu/"
+logoFile = "assets/ccwake/logo.png"
+licenseURL = "LICENSE"
+assetsLicenseFile = "LICENSE-CCPL.md"
+
+[[dependencies.ccwake]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ccwake]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,1.21)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ccwake]]
+modId = "computercraft"
+mandatory = true
+versionRange = "[1.108,)"
+ordering = "AFTER"
+side = "BOTH"

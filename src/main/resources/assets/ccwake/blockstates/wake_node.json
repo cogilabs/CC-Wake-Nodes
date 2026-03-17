@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=north": { "model": "ccwake:block/wake_node", "y": 180 },
+    "facing=south": { "model": "ccwake:block/wake_node", "y": 0 },
+    "facing=west":  { "model": "ccwake:block/wake_node", "y": 90 },
+    "facing=east":  { "model": "ccwake:block/wake_node", "y": 270 },
+    "facing=up":    { "model": "ccwake:block/wake_node", "x": 90 },
+    "facing=down":  { "model": "ccwake:block/wake_node", "x": 270 }
+  }
+}

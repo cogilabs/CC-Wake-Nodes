@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "ccwake:block/wake_controller_front",
+    "south": "ccwake:block/wake_controller_side",
+    "east": "ccwake:block/wake_controller_side",
+    "west": "ccwake:block/wake_controller_side",
+    "up": "ccwake:block/wake_controller_top",
+    "down": "ccwake:block/wake_controller_top",
+    "particle": "ccwake:block/wake_controller_front"
+  }
+}

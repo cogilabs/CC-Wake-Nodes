@@ -1,0 +1,101 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "ccwake:wake_chip"
+  },
+  "transitionalItem": {
+    "item": "ccwake:incomplete_wake_node"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        },
+        {
+          "item": "minecraft:amethyst_shard"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        },
+        {
+          "item": "create:iron_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        },
+        {
+          "item": "minecraft:redstone"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        },
+        {
+          "item": "create:iron_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "ccwake:wake_node",
+      "count": 1
+    }
+  ],
+  "loops": 2
+}

@@ -1,0 +1,101 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "ccwake:wake_chip"
+  },
+  "transitionalItem": {
+    "item": "ccwake:incomplete_wake_controller"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        },
+        {
+          "item": "create:electron_tube"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        },
+        {
+          "item": "minecraft:gold_ingot"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        },
+        {
+          "item": "minecraft:redstone"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        },
+        {
+          "item": "create:iron_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_controller"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "ccwake:wake_controller",
+      "count": 1
+    }
+  ],
+  "loops": 2
+}
