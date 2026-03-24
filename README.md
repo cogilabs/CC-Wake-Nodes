@@ -1,5 +1,8 @@
 # ComputerCraft Wake Nodes
 
+Note : The project is currently under review from ModRinth, the Readme will be updated once it's done!
+You can check by yourself if the mod has been accepted here: https://modrinth.com/mod/ccwake (Will give 404 until the mod has been accepted).
+
 ComputerCraft Wake Nodes is a Forge mod for Minecraft 1.20.1 that adds a small chunk-loading network for CC: Tweaked (ComputerCraft) computers, particularly useful for automation setups.
 
 It introduces two ComputerCraft peripherals:
