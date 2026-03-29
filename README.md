@@ -1,4 +1,6 @@
-# ComputerCraft Wake Nodes
+# ComputerCraft Wake Nodes  
+
+[Get it on CurseForge!](https://www.curseforge.com/minecraft/mc-mods/computercraft-wake-nodes)
 
 Note : The project is currently under review from ModRinth, the Readme will be updated once it's done!  
 You can check by yourself if the mod has been accepted here: https://modrinth.com/mod/ccwake (Will give 404 until the mod has been accepted).
