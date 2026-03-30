@@ -1,9 +1,29 @@
 # ComputerCraft Wake Nodes  
 
+<p align="center"><img alt="Banner" title="Banner" src="https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/banner.png?raw=true"></p>
+
 <p align="center">
     <a href="https://modrinth.com/mod/ccwake" target="_blank"><img alt="ModRinth badge" title="Get it on ModRinth!" src="https://img.shields.io/badge/-ModRinth-00AF5C?style=for-the-badge&logo=modrinth&logoColor=white"/></a>
     <a href="https://www.curseforge.com/minecraft/mc-mods/computercraft-wake-nodes" target="_blank"><img alt="CurseForge badge" title="Get it on CurseForge!" src="https://img.shields.io/badge/-CurseForge-F16436?style=for-the-badge&logo=curseforge&logoColor=white"/></a>
 </p>
+
+[→ En Français](/localizedReadme/README-fr.md)  
+
+## Table of Contents
+
+ - [Introduction](#introduction)
+ - [Features](#features)
+ - [Requirements](#requirements)
+ - [Added Content](#added-content)
+ - [How It Works](#how-it-works)
+ - [ComputerCraft API](#computercraft-api)
+ - [Example Setup](#example-setup)
+ - [Configuration](#configuration)
+ - [Behavior Notes](#behavior-notes)
+ - [Sample Scripts](#sample-scripts)
+ - [License](#license)
+
+## Introduction
 
 ComputerCraft Wake Nodes is a Forge mod for Minecraft 1.20.1 that adds a small chunk-loading network for CC: Tweaked (ComputerCraft) computers, particularly useful for automation setups.
 
@@ -353,4 +373,4 @@ Code is licensed under the MIT License.
 
 Some bundled assets (textures) are licensed under the ComputerCraft Public License v1.0.0 (CCPL).
 
-See the [LICENSE](https://github.com/cogilabs/CC-Wake-Nodes/blob/main/LICENSE) and [LICENSE-CCPL](https://github.com/cogilabs/CC-Wake-Nodes/blob/main/LICENSE-CCPL.md) files on GitHub for details.
+See the [LICENSE](https://github.com/cogilabs/CC-Wake-Nodes/blob/main/LICENSE) and [LICENSE-CCPL](https://github.com/cogilabs/CC-Wake-Nodes/blob/main/LICENSE-CCPL.md) files for details.
