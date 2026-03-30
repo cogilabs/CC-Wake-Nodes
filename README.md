@@ -1,9 +1,9 @@
 # ComputerCraft Wake Nodes  
 
-[Get it on CurseForge!](https://www.curseforge.com/minecraft/mc-mods/computercraft-wake-nodes)
-
-Note : The project is currently under review from ModRinth, the Readme will be updated once it's done!  
-You can check by yourself if the mod has been accepted here: https://modrinth.com/mod/ccwake (Will give 404 until the mod has been accepted).
+<p align="center">
+    <a href="https://modrinth.com/mod/ccwake" target="_blank"><img alt="ModRinth badge" title="Get it on ModRinth!" src="https://img.shields.io/badge/-ModRinth-00AF5C?style=for-the-badge&logo=modrinth&logoColor=white"/></a>
+    <a href="https://www.curseforge.com/minecraft/mc-mods/computercraft-wake-nodes" target="_blank"><img alt="CurseForge badge" title="Get it on CurseForge!" src="https://img.shields.io/badge/-CurseForge-F16436?style=for-the-badge&logo=curseforge&logoColor=white"/></a>
+</p>
 
 ComputerCraft Wake Nodes is a Forge mod for Minecraft 1.20.1 that adds a small chunk-loading network for CC: Tweaked (ComputerCraft) computers, particularly useful for automation setups.
 
