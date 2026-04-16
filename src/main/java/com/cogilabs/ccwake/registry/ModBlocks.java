@@ -17,6 +17,12 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, CcWakeMod.MOD_ID);
 
+    public static final RegistryObject<Block> WAKE_CONTROLLER = BLOCKS.register("wake_controller",
+            () -> new WakeControllerBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(1.5f)
+                    .sound(SoundType.METAL)));
+
     public static final RegistryObject<Block> WAKE_NODE = BLOCKS.register("wake_node",
             () -> new WakeNodeBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
@@ -27,12 +33,6 @@ public class ModBlocks {
             () -> new WakeNodeAdvancedBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.GOLD)
                     .strength(1.0f)
-                    .sound(SoundType.METAL)));
-
-    public static final RegistryObject<Block> WAKE_CONTROLLER = BLOCKS.register("wake_controller",
-            () -> new WakeControllerBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.STONE)
-                    .strength(1.5f)
                     .sound(SoundType.METAL)));
 
     public static void register(IEventBus eventBus) {

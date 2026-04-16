@@ -14,6 +14,9 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, CcWakeMod.MOD_ID);
 
+    public static final RegistryObject<Item> WAKE_CHIP = ITEMS.register("wake_chip",
+            () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> WAKE_CONTROLLER = ITEMS.register("wake_controller",
             () -> new BlockItem(ModBlocks.WAKE_CONTROLLER.get(), new Item.Properties()));
 
@@ -23,16 +26,13 @@ public class ModItems {
     public static final RegistryObject<Item> WAKE_NODE_ADVANCED = ITEMS.register("wake_node_advanced",
             () -> new BlockItem(ModBlocks.WAKE_NODE_ADVANCED.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> WAKE_CHIP = ITEMS.register("wake_chip",
-            () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> INCOMPLETE_WAKE_CHIP = ITEMS.register("incomplete_wake_chip",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> INCOMPLETE_WAKE_NODE = ITEMS.register("incomplete_wake_node",
+    public static final RegistryObject<Item> INCOMPLETE_WAKE_CONTROLLER = ITEMS.register("incomplete_wake_controller",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> INCOMPLETE_WAKE_CONTROLLER = ITEMS.register("incomplete_wake_controller",
+    public static final RegistryObject<Item> INCOMPLETE_WAKE_NODE = ITEMS.register("incomplete_wake_node",
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> INCOMPLETE_WAKE_NODE_ADVANCED = ITEMS.register("incomplete_wake_node_advanced",
