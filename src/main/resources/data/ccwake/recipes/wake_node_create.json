@@ -20,7 +20,7 @@
           "item": "ccwake:incomplete_wake_node"
         },
         {
-          "item": "minecraft:amethyst_shard"
+          "item": "create:iron_sheet"
         }
       ],
       "results": [
@@ -36,7 +36,7 @@
           "item": "ccwake:incomplete_wake_node"
         },
         {
-          "item": "create:iron_sheet"
+          "item": "minecraft:amethyst_shard"
         }
       ],
       "results": [
