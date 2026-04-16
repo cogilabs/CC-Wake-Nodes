@@ -63,7 +63,7 @@ Composant d'artisanat utilisé par les autres blocs.
 
 Recette :
 
-![Wake chip recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_chip_recipe.png)
+![Recette Wake chip](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_chip_recipe.png)
 
 Onglet Créatif : Ingredients
 
@@ -84,7 +84,7 @@ Règle de placement importante :
 
 Recette :
 
-![Wake Node recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_node_recipe.png)
+![Recette Wake Node](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_node_recipe.png)
 
 Onglet Créatif : Functional Blocks
 
@@ -100,20 +100,7 @@ Elle hérite de toutes les fonctionnalités de la Wake Node basique et ajoute le
 
 Recette (même forme que la Wake Node, mais avec de la netherite au lieu du fer) :
 
-```
-+---+---+---+
-| N | R | N |
-+---+---+---+
-| A | C | A |
-+---+---+---+
-| N | R | N |
-+---+---+---+
-
-N = Lingot de Netherite
-R = Redstone
-A = Éclat d'Améthyste
-C = Wake Chip
-```
+![Recette Advanced Wake Node](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_node_advanced_recipe.png)
 
 Onglet Créatif : Functional Blocks
 
@@ -130,7 +117,7 @@ Ce qu'il fait :
 
 Recette :
 
-![Wake Controller recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_controller_recipe.png)
+![Recette Wake Controller](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_controller_recipe.png)
 
 Onglet Créatif : Functional Blocks
 

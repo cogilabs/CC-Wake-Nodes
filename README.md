@@ -100,20 +100,7 @@ It inherits all features of the basic Wake Node and adds `setRange()`, `getRange
 
 Recipe (same shape as Wake Node, but with netherite instead of iron):
 
-```
-+---+---+---+
-| N | R | N |
-+---+---+---+
-| A | C | A |
-+---+---+---+
-| N | R | N |
-+---+---+---+
-
-N = Netherite Ingot
-R = Redstone
-A = Amethyst Shard
-C = Wake Chip
-```
+![Advanced Wake Node recipe](https://raw.githubusercontent.com/cogilabs/CC-Wake-Nodes/refs/heads/main/readmeSources/wake_node_advanced_recipe.png)
 
 Creative tab: Functional Blocks
 
