@@ -2,6 +2,7 @@ ComputerCraft Wake Nodes - API Reference
 
 Peripheral types
 - `wake_node` — peripheral attached to a ComputerCraft computer.
+- `wake_node_advanced` — advanced peripheral with configurable chunk range.
 - `wake_controller` — peripheral used by a controller computer.
 
 Wake Node API
@@ -42,6 +43,33 @@ Wake Node API
   - Returns: a table describing ownership and controllers for the node, e.g.:
     `{ owner = 17, controllers = { 42, 73 } }`.
 
+Advanced Wake Node API
+
+The Advanced Wake Node (`wake_node_advanced`) inherits all methods from `wake_node` and adds the following:
+
+- `setRange(size)`
+  - Parameters: `size` (integer: `1`, `3`, or `5`)
+  - Effect: sets the loaded area around the computer. `1` = 1 chunk, `3` = 3×3 (9 chunks), `5` = 5×5 (25 chunks).
+  - Requirements: only the node owner may call this method.
+  - If the node is currently loaded, the chunk set is updated live (unless disabled by config).
+  - Errors: raises if the range is invalid, exceeds server max, or the caller is not the owner.
+  - Example: `wake.setRange(3)`
+
+- `getRange()`
+  - Returns: the current range size (`1`, `3`, or `5`).
+  - Example: `print(wake.getRange())`
+
+- `listAvailableRanges()`
+  - Returns: an array of allowed range values, e.g. `{ 1, 3, 5 }`.
+  - The available ranges depend on the server configuration (`max_range`).
+  - Example: `for _, r in ipairs(wake.listAvailableRanges()) do print(r) end`
+
+- `getInfo()` (overridden)
+  - Returns the same table as `wake_node.getInfo()` plus two extra fields:
+    - `range`: current range size (1, 3, or 5)
+    - `loaded_chunks`: total chunks covered (1, 9, or 25)
+  - Example: `{ id = "factory", dimension = "minecraft:overworld", chunk_x = 12, chunk_z = -4, range = 3, loaded_chunks = 9 }`
+
 Notes on ownership:
 
 - On first successful `setId(...)` call the calling computer becomes the node owner.
@@ -60,6 +88,7 @@ Wake Controller API
     `{ id = "...", dimension = "...", chunk_x = X, chunk_z = Z, loaded = BOOL, expires_at = N }`
     - `loaded`: boolean whether the chunk is currently forced loaded.
     - `expires_at`: remaining seconds for a temporary load (present only for temporary loads).
+    - For Advanced Wake Nodes, also includes `range` (1, 3, or 5) and `loaded_chunks` (1, 9, or 25).
 
 - `loadNode(id)`
   - Parameters: `id` (string)

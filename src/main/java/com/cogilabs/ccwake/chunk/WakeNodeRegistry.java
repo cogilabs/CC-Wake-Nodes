@@ -28,7 +28,8 @@ public class WakeNodeRegistry extends SavedData {
             int chunkZ,
             String attachFace,
             int ownerComputerId,
-            Set<Integer> controllerComputerIds
+            Set<Integer> controllerComputerIds,
+            int range
     ) {
         public NodeData {
             controllerComputerIds = Collections.unmodifiableSet(new HashSet<>(controllerComputerIds));
@@ -53,8 +54,8 @@ public class WakeNodeRegistry extends SavedData {
     }
 
     public void registerNode(String id, String dimension, BlockPos nodePos, BlockPos computerPos,
-                             int chunkX, int chunkZ, String attachFace, int ownerComputerId) {
-        nodes.put(id, new NodeData(id, dimension, nodePos, computerPos, chunkX, chunkZ, attachFace, ownerComputerId, Set.of()));
+                             int chunkX, int chunkZ, String attachFace, int ownerComputerId, int range) {
+        nodes.put(id, new NodeData(id, dimension, nodePos, computerPos, chunkX, chunkZ, attachFace, ownerComputerId, Set.of(), range));
         setDirty();
 
         if (CcWakeConfig.ENABLE_NODE_LOGS.get()) {
@@ -89,7 +90,27 @@ public class WakeNodeRegistry extends SavedData {
                 data.chunkZ(),
                 data.attachFace(),
                 ownerComputerId,
-                data.controllerComputerIds()
+                data.controllerComputerIds(),
+                data.range()
+        ));
+        setDirty();
+    }
+
+    public void setRange(String id, int range) {
+        NodeData data = nodes.get(id);
+        if (data == null) return;
+
+        nodes.put(id, new NodeData(
+                data.id(),
+                data.dimension(),
+                data.nodePos(),
+                data.computerPos(),
+                data.chunkX(),
+                data.chunkZ(),
+                data.attachFace(),
+                data.ownerComputerId(),
+                data.controllerComputerIds(),
+                range
         ));
         setDirty();
     }
@@ -112,7 +133,8 @@ public class WakeNodeRegistry extends SavedData {
                 data.chunkZ(),
                 data.attachFace(),
                 data.ownerComputerId(),
-                updated
+                updated,
+                data.range()
         ));
         setDirty();
         return true;
@@ -135,7 +157,8 @@ public class WakeNodeRegistry extends SavedData {
                 data.chunkZ(),
                 data.attachFace(),
                 data.ownerComputerId(),
-                updated
+                updated,
+                data.range()
         ));
         setDirty();
         return true;
@@ -170,6 +193,7 @@ public class WakeNodeRegistry extends SavedData {
                 .mapToInt(Integer::intValue)
                 .toArray();
             tag.putIntArray("controllerComputerIds", controllerIds);
+            tag.putInt("range", node.range());
             list.add(tag);
         }
         root.put("nodes", list);
@@ -198,6 +222,8 @@ public class WakeNodeRegistry extends SavedData {
                 }
             }
 
+            int range = tag.contains("range") ? tag.getInt("range") : 0;
+
             registry.nodes.put(id, new NodeData(
                     id,
                     dimension,
@@ -207,7 +233,8 @@ public class WakeNodeRegistry extends SavedData {
                     chunkZ,
                     attachFace,
                     ownerComputerId,
-                    controllerComputerIds
+                    controllerComputerIds,
+                    range
             ));
         }
         return registry;

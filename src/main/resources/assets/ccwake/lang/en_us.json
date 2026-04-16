@@ -1,10 +1,13 @@
 {
   "block.ccwake.wake_node": "Wake Node",
+  "block.ccwake.wake_node_advanced": "Advanced Wake Node",
   "block.ccwake.wake_controller": "Wake Controller",
   "item.ccwake.wake_node": "Wake Node",
+  "item.ccwake.wake_node_advanced": "Advanced Wake Node",
   "item.ccwake.wake_controller": "Wake Controller",
   "item.ccwake.wake_chip": "Wake Chip",
   "item.ccwake.incomplete_wake_chip": "Incomplete Wake Chip",
   "item.ccwake.incomplete_wake_node": "Incomplete Wake Node",
+  "item.ccwake.incomplete_wake_node_advanced": "Incomplete Advanced Wake Node",
   "item.ccwake.incomplete_wake_controller": "Incomplete Wake Controller"
 }

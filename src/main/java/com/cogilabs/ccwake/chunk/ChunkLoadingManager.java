@@ -18,13 +18,13 @@ public class ChunkLoadingManager {
     private final Map<String, LoadEntry> loadedNodes = new ConcurrentHashMap<>();
     private final Queue<ChunkOp> pendingOps = new ConcurrentLinkedQueue<>();
 
-    private record LoadEntry(String nodeId, int chunkX, int chunkZ, String dimension, long expiresAtTick) {
+    private record LoadEntry(String nodeId, int chunkX, int chunkZ, String dimension, int radius, long expiresAtTick) {
         boolean hasExpiration() {
             return expiresAtTick > 0;
         }
     }
 
-    private sealed interface ChunkOp permits LoadOp, UnloadOp, UnloadAllOp {
+    private sealed interface ChunkOp permits LoadOp, UnloadOp, UnloadAllOp, ChangeRadiusOp {
     }
 
     private record LoadOp(WakeNodeRegistry.NodeData node, int durationSeconds) implements ChunkOp {
@@ -34,6 +34,9 @@ public class ChunkLoadingManager {
     }
 
     private record UnloadAllOp() implements ChunkOp {
+    }
+
+    private record ChangeRadiusOp(String nodeId, int newRadius) implements ChunkOp {
     }
 
     public static ChunkLoadingManager get(ServerLevel level) {
@@ -56,6 +59,16 @@ public class ChunkLoadingManager {
         pendingOps.add(new UnloadAllOp());
     }
 
+    public void requestChangeRadius(String nodeId, int newRadius) {
+        pendingOps.add(new ChangeRadiusOp(nodeId, newRadius));
+    }
+
+    private static int computeRadius(WakeNodeRegistry.NodeData node) {
+        int range = node.range();
+        if (range <= 0) return CcWakeConfig.DEFAULT_LOAD_RADIUS.get();
+        return (range - 1) / 2;
+    }
+
     private void applyLoadNode(ServerLevel level, WakeNodeRegistry.NodeData node, int durationSeconds) {
         int maxLoaded = CcWakeConfig.MAX_LOADED_NODES.get();
         if (loadedNodes.size() >= maxLoaded && !loadedNodes.containsKey(node.id())) {
@@ -63,7 +76,7 @@ public class ChunkLoadingManager {
             return;
         }
 
-        int radius = CcWakeConfig.DEFAULT_LOAD_RADIUS.get();
+        int radius = computeRadius(node);
         long expiresAt = durationSeconds > 0
                 ? level.getGameTime() + (long) durationSeconds * 20L
                 : -1;
@@ -73,7 +86,7 @@ public class ChunkLoadingManager {
                 && existing.chunkX() == node.chunkX()
                 && existing.chunkZ() == node.chunkZ()
                 && Objects.equals(existing.dimension(), node.dimension())) {
-            loadedNodes.put(node.id(), new LoadEntry(node.id(), existing.chunkX(), existing.chunkZ(), existing.dimension(), expiresAt));
+            loadedNodes.put(node.id(), new LoadEntry(node.id(), existing.chunkX(), existing.chunkZ(), existing.dimension(), existing.radius(), expiresAt));
             if (CcWakeConfig.ENABLE_NODE_LOGS.get()) {
                 if (durationSeconds > 0) {
                     CcWakeMod.LOGGER.info("[WakeNodes] Refreshed node {} for {}s", node.id(), durationSeconds);
@@ -90,7 +103,7 @@ public class ChunkLoadingManager {
 
         forceChunks(level, node.chunkX(), node.chunkZ(), radius, true);
 
-        loadedNodes.put(node.id(), new LoadEntry(node.id(), node.chunkX(), node.chunkZ(), node.dimension(), expiresAt));
+        loadedNodes.put(node.id(), new LoadEntry(node.id(), node.chunkX(), node.chunkZ(), node.dimension(), radius, expiresAt));
 
         if (CcWakeConfig.ENABLE_NODE_LOGS.get()) {
             if (durationSeconds > 0) {
@@ -104,8 +117,7 @@ public class ChunkLoadingManager {
     private void applyUnloadNode(ServerLevel level, String nodeId) {
         LoadEntry entry = loadedNodes.remove(nodeId);
         if (entry != null) {
-            int radius = CcWakeConfig.DEFAULT_LOAD_RADIUS.get();
-            forceChunks(level, entry.chunkX(), entry.chunkZ(), radius, false);
+            forceChunks(level, entry.chunkX(), entry.chunkZ(), entry.radius(), false);
 
             if (CcWakeConfig.ENABLE_NODE_LOGS.get()) {
                 CcWakeMod.LOGGER.info("[WakeNodes] Unloaded node {}", nodeId);
@@ -114,9 +126,8 @@ public class ChunkLoadingManager {
     }
 
     public void unloadAll(ServerLevel level) {
-        int radius = CcWakeConfig.DEFAULT_LOAD_RADIUS.get();
         for (LoadEntry entry : new ArrayList<>(loadedNodes.values())) {
-            forceChunks(level, entry.chunkX(), entry.chunkZ(), radius, false);
+            forceChunks(level, entry.chunkX(), entry.chunkZ(), entry.radius(), false);
             if (CcWakeConfig.ENABLE_NODE_LOGS.get()) {
                 CcWakeMod.LOGGER.info("[WakeNodes] Unloaded node {}", entry.nodeId());
             }
@@ -127,8 +138,7 @@ public class ChunkLoadingManager {
     public void unloadNodeSilent(ServerLevel level, String nodeId) {
         LoadEntry entry = loadedNodes.remove(nodeId);
         if (entry != null) {
-            int radius = CcWakeConfig.DEFAULT_LOAD_RADIUS.get();
-            forceChunks(level, entry.chunkX(), entry.chunkZ(), radius, false);
+            forceChunks(level, entry.chunkX(), entry.chunkZ(), entry.radius(), false);
         }
     }
 
@@ -166,7 +176,7 @@ public class ChunkLoadingManager {
         for (String nodeId : toExpire) {
             LoadEntry entry = loadedNodes.remove(nodeId);
             if (entry != null) {
-                forceChunks(level, entry.chunkX(), entry.chunkZ(), radius, false);
+                forceChunks(level, entry.chunkX(), entry.chunkZ(), entry.radius(), false);
                 if (CcWakeConfig.ENABLE_NODE_LOGS.get()) {
                     CcWakeMod.LOGGER.info("[WakeNodes] Auto-expired node {}", nodeId);
                 }
@@ -187,6 +197,8 @@ public class ChunkLoadingManager {
                 applyLoadNode(level, loadOp.node(), loadOp.durationSeconds());
             } else if (op instanceof UnloadOp unloadOp) {
                 applyUnloadNode(level, unloadOp.nodeId());
+            } else if (op instanceof ChangeRadiusOp changeOp) {
+                applyChangeRadius(level, changeOp.nodeId(), changeOp.newRadius());
             } else if (op instanceof UnloadAllOp) {
                 unloadAll(level);
             }
@@ -203,6 +215,39 @@ public class ChunkLoadingManager {
                 int cz = centerChunkZ + dz;
                 ForgeChunkManager.forceChunk(level, CcWakeMod.MOD_ID, owner, cx, cz, add, true);
             }
+        }
+    }
+
+    private void applyChangeRadius(ServerLevel level, String nodeId, int newRadius) {
+        LoadEntry entry = loadedNodes.get(nodeId);
+        if (entry == null) return;
+
+        int oldRadius = entry.radius();
+        if (oldRadius == newRadius) return;
+
+        // Force all chunks for the new radius (idempotent for overlap)
+        forceChunks(level, entry.chunkX(), entry.chunkZ(), newRadius, true);
+
+        // Unforce chunks that were in old radius but not in new radius
+        if (newRadius < oldRadius) {
+            BlockPos owner = new BlockPos(entry.chunkX() * 16, 0, entry.chunkZ() * 16);
+            for (int dx = -oldRadius; dx <= oldRadius; dx++) {
+                for (int dz = -oldRadius; dz <= oldRadius; dz++) {
+                    if (Math.abs(dx) > newRadius || Math.abs(dz) > newRadius) {
+                        int cx = entry.chunkX() + dx;
+                        int cz = entry.chunkZ() + dz;
+                        ForgeChunkManager.forceChunk(level, CcWakeMod.MOD_ID, owner, cx, cz, false, true);
+                    }
+                }
+            }
+        }
+
+        loadedNodes.put(nodeId, new LoadEntry(
+                entry.nodeId(), entry.chunkX(), entry.chunkZ(),
+                entry.dimension(), newRadius, entry.expiresAtTick()));
+
+        if (CcWakeConfig.ENABLE_NODE_LOGS.get()) {
+            CcWakeMod.LOGGER.info("[WakeNodes] Changed radius for node {} from {} to {}", nodeId, oldRadius, newRadius);
         }
     }
 }

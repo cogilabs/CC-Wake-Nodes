@@ -2,6 +2,7 @@ package com.cogilabs.ccwake.registry;
 
 import com.cogilabs.ccwake.CcWakeMod;
 import com.cogilabs.ccwake.block.WakeNodeBlock;
+import com.cogilabs.ccwake.block.WakeNodeAdvancedBlock;
 import com.cogilabs.ccwake.block.WakeControllerBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -20,6 +21,12 @@ public class ModBlocks {
             () -> new WakeNodeBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
                     .strength(0.6f)
+                    .sound(SoundType.METAL)));
+
+    public static final RegistryObject<Block> WAKE_NODE_ADVANCED = BLOCKS.register("wake_node_advanced",
+            () -> new WakeNodeAdvancedBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.GOLD)
+                    .strength(1.0f)
                     .sound(SoundType.METAL)));
 
     public static final RegistryObject<Block> WAKE_CONTROLLER = BLOCKS.register("wake_controller",

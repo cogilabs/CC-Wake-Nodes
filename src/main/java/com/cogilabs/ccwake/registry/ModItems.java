@@ -20,6 +20,9 @@ public class ModItems {
     public static final RegistryObject<Item> WAKE_NODE = ITEMS.register("wake_node",
             () -> new BlockItem(ModBlocks.WAKE_NODE.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> WAKE_NODE_ADVANCED = ITEMS.register("wake_node_advanced",
+            () -> new BlockItem(ModBlocks.WAKE_NODE_ADVANCED.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> WAKE_CHIP = ITEMS.register("wake_chip",
             () -> new Item(new Item.Properties()));
 
@@ -32,6 +35,9 @@ public class ModItems {
     public static final RegistryObject<Item> INCOMPLETE_WAKE_CONTROLLER = ITEMS.register("incomplete_wake_controller",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> INCOMPLETE_WAKE_NODE_ADVANCED = ITEMS.register("incomplete_wake_node_advanced",
+            () -> new Item(new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
         eventBus.addListener(ModItems::addCreativeTabItems);
@@ -40,6 +46,7 @@ public class ModItems {
     private static void addCreativeTabItems(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(WAKE_NODE);
+            event.accept(WAKE_NODE_ADVANCED);
             event.accept(WAKE_CONTROLLER);
         }
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {

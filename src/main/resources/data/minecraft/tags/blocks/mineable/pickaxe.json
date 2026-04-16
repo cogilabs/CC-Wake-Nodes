@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "ccwake:wake_node",
+    "ccwake:wake_node_advanced",
     "ccwake:wake_controller"
   ]
 }

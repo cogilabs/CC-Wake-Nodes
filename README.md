@@ -27,16 +27,17 @@
 
 ComputerCraft Wake Nodes is a Forge mod for Minecraft 1.20.1 that adds a small chunk-loading network for CC: Tweaked (ComputerCraft) computers, particularly useful for automation setups.
 
-It introduces two ComputerCraft peripherals:
+It introduces three ComputerCraft peripherals:
 
 - `wake_node`: attached to a ComputerCraft computer and registered under a string ID, effectively serving as the chunk loader.
+- `wake_node_advanced`: an upgraded version of `wake_node` that lets the user choose the loaded area (1×1, 3×3, or 5×5 chunks).
 - `wake_controller`: used by another computer to list, load, unload, and inspect registered nodes.
 
 The main use case is waking distant computer setups long enough for their chunk to load and tick, allowing their startup logic to run.
 
 It also adds the *Wake Chip*, a crafting component used by the other blocks.
 
-If Create is installed, custom Create recipes are provided for the Wake Chip, Wake Node, and Wake Controller.
+If Create is installed, custom Create recipes are provided for the Wake Chip, Wake Node, Advanced Wake Node, and Wake Controller.
 
 ## Features
 
@@ -87,6 +88,35 @@ Recipe:
 
 Creative tab: Functional Blocks
 
+### Advanced Wake Node
+
+An upgraded Wake Node that lets the user choose the loaded area around the attached computer:
+
+- **1×1** — 1 chunk (same as a basic Wake Node)
+- **3×3** — 9 chunks
+- **5×5** — 25 chunks
+
+It inherits all features of the basic Wake Node and adds `setRange()`, `getRange()`, and `listAvailableRanges()` methods.
+
+Recipe (same shape as Wake Node, but with netherite instead of iron):
+
+```
++---+---+---+
+| N | R | N |
++---+---+---+
+| A | C | A |
++---+---+---+
+| N | R | N |
++---+---+---+
+
+N = Netherite Ingot
+R = Redstone
+A = Amethyst Shard
+C = Wake Chip
+```
+
+Creative tab: Functional Blocks
+
 ### Wake Controller
 
 A peripheral block used by a controller computer to manage registered wake nodes.
@@ -125,6 +155,7 @@ Node registrations are saved, but active forced chunks are not. After a server r
 ### Peripheral Types
 
 - Wake Node peripheral type: `wake_node`
+- Advanced Wake Node peripheral type: `wake_node_advanced`
 - Wake Controller peripheral type: `wake_controller`
 
 ### Wake Node API
@@ -222,6 +253,61 @@ Returns a table with the node ID and chunk information:
 
 If no ID has been assigned yet, `id` is returned as an empty string.
 
+### Advanced Wake Node API
+
+The Advanced Wake Node exposes the `wake_node_advanced` peripheral type. It inherits all methods from the basic Wake Node and adds the following:
+
+```lua
+local wake = peripheral.find("wake_node_advanced")
+```
+
+#### `setRange(size)`
+
+Sets the loaded area around the computer.
+
+- `size` must be `1`, `3`, or `5`
+- only the node owner can call this method
+- if the node is currently loaded, the chunk set is updated live (unless disabled by config)
+- raises an error if the range exceeds the server max or the caller is not the owner
+
+Example:
+
+```lua
+wake.setRange(5) -- load a 5×5 area (25 chunks)
+```
+
+#### `getRange()`
+
+Returns the current range size (`1`, `3`, or `5`).
+
+```lua
+print(wake.getRange()) -- 3
+```
+
+#### `listAvailableRanges()`
+
+Returns an array of allowed range values based on server configuration.
+
+```lua
+local ranges = wake.listAvailableRanges()
+-- { 1, 3, 5 }
+```
+
+#### `getInfo()` (overridden)
+
+Returns the same table as the basic `getInfo()` plus two extra fields:
+
+```lua
+{
+  id = "remote_factory",
+  dimension = "minecraft:overworld",
+  chunk_x = 12,
+  chunk_z = -4,
+  range = 3,
+  loaded_chunks = 9
+}
+```
+
 ### Wake Controller API
 
 Find the peripheral with standard ComputerCraft calls such as:
@@ -266,6 +352,7 @@ Notes:
 - `loaded` is a boolean
 - `expires_at` is only present for temporary loads
 - `expires_at` is reported as remaining seconds, not an absolute timestamp
+- for Advanced Wake Nodes, the table also includes `range` (1, 3, or 5) and `loaded_chunks` (1, 9, or 25)
 
 #### `loadNode(id)`
 
@@ -348,6 +435,10 @@ Server config keys:
 - `chunk_loading.max_load_duration_seconds`: maximum duration accepted by `loadFor`. Default: `300`
 - `chunk_loading.default_load_radius`: chunk radius around the target computer. `0` means only the computer's own chunk. Default: `0`
 - `chunk_loading.chunk_ops_per_tick`: maximum number of queued load/unload operations processed each server tick. Lower values smooth spikes but wake nodes more slowly. Default: `3`
+- `advanced_wake_node.enabled`: enable the Advanced Wake Node block. Default: `true`
+- `advanced_wake_node.default_range`: default range for newly placed Advanced Wake Nodes (1, 3, or 5). Default: `3`
+- `advanced_wake_node.max_range`: maximum range allowed (1, 3, or 5). Default: `5`
+- `advanced_wake_node.allow_range_change_while_loaded`: allow changing range while the node is loaded. Default: `true`
 
 Common config keys:
 

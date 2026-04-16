@@ -9,7 +9,11 @@ public class CcWakeConfig {
     public static final ForgeConfigSpec.IntValue MAX_LOADED_NODES;
     public static final ForgeConfigSpec.IntValue MAX_LOAD_DURATION_SECONDS;
     public static final ForgeConfigSpec.IntValue DEFAULT_LOAD_RADIUS;
-        public static final ForgeConfigSpec.IntValue CHUNK_OPS_PER_TICK;
+    public static final ForgeConfigSpec.IntValue CHUNK_OPS_PER_TICK;
+    public static final ForgeConfigSpec.BooleanValue ADVANCED_WAKE_NODE_ENABLED;
+    public static final ForgeConfigSpec.IntValue ADVANCED_WAKE_NODE_DEFAULT_RANGE;
+    public static final ForgeConfigSpec.IntValue ADVANCED_WAKE_NODE_MAX_RANGE;
+    public static final ForgeConfigSpec.BooleanValue ADVANCED_WAKE_NODE_ALLOW_RANGE_CHANGE_WHILE_LOADED;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -31,6 +35,26 @@ public class CcWakeConfig {
         CHUNK_OPS_PER_TICK = builder
                 .comment("Maximum number of queued chunk load/unload operations processed per server tick.")
                 .defineInRange("chunk_ops_per_tick", 3, 1, 64);
+
+        builder.pop();
+
+        builder.comment("Advanced Wake Node configuration").push("advanced_wake_node");
+
+        ADVANCED_WAKE_NODE_ENABLED = builder
+                .comment("Enable the Advanced Wake Node block and its features.")
+                .define("enabled", true);
+
+        ADVANCED_WAKE_NODE_DEFAULT_RANGE = builder
+                .comment("Default range for newly placed Advanced Wake Nodes (1, 3 or 5).")
+                .defineInRange("default_range", 3, 1, 5);
+
+        ADVANCED_WAKE_NODE_MAX_RANGE = builder
+                .comment("Maximum range allowed for Advanced Wake Nodes (1, 3 or 5).")
+                .defineInRange("max_range", 5, 1, 5);
+
+        ADVANCED_WAKE_NODE_ALLOW_RANGE_CHANGE_WHILE_LOADED = builder
+                .comment("Allow changing the range of an Advanced Wake Node while it is loaded.")
+                .define("allow_range_change_while_loaded", true);
 
         builder.pop();
 

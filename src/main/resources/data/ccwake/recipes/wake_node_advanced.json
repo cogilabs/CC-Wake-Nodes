@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": ["nRn", "ACA", "nRn"],
+    "key": {
+        "n": { "item": "minecraft:netherite_ingot" },
+        "R": { "item": "minecraft:redstone" },
+        "A": { "item": "minecraft:amethyst_shard" },
+        "C": { "item": "ccwake:wake_chip" }
+    },
+    "result": { "item": "ccwake:wake_node_advanced", "count": 1 }
+}

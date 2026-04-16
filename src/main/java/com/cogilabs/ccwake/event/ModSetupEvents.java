@@ -3,6 +3,7 @@ package com.cogilabs.ccwake.event;
 import com.cogilabs.ccwake.CcWakeMod;
 import com.cogilabs.ccwake.peripheral.WakeControllerPeripheralProvider;
 import com.cogilabs.ccwake.peripheral.WakeNodePeripheralProvider;
+import com.cogilabs.ccwake.peripheral.WakeNodeAdvancedPeripheralProvider;
 import dan200.computercraft.api.ForgeComputerCraftAPI;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +15,7 @@ public class ModSetupEvents {
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            ForgeComputerCraftAPI.registerPeripheralProvider(new WakeNodeAdvancedPeripheralProvider());
             ForgeComputerCraftAPI.registerPeripheralProvider(new WakeNodePeripheralProvider());
             ForgeComputerCraftAPI.registerPeripheralProvider(new WakeControllerPeripheralProvider());
         });

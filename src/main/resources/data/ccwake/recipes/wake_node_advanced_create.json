@@ -1,0 +1,101 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "ccwake:wake_chip"
+  },
+  "transitionalItem": {
+    "item": "ccwake:incomplete_wake_node_advanced"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        },
+        {
+          "item": "minecraft:amethyst_shard"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        },
+        {
+          "item": "minecraft:netherite_ingot"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        },
+        {
+          "item": "minecraft:redstone"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        },
+        {
+          "item": "minecraft:netherite_ingot"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        }
+      ],
+      "results": [
+        {
+          "item": "ccwake:incomplete_wake_node_advanced"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "ccwake:wake_node_advanced",
+      "count": 1
+    }
+  ],
+  "loops": 2
+}

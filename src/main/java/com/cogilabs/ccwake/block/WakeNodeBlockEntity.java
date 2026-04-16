@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +14,11 @@ public class WakeNodeBlockEntity extends BlockEntity {
     private @Nullable String nodeId;
 
     public WakeNodeBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.WAKE_NODE.get(), pos, state);
+        this(ModBlockEntities.WAKE_NODE.get(), pos, state);
+    }
+
+    protected WakeNodeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     public @Nullable String getNodeId() {

@@ -68,6 +68,12 @@ public class WakeControllerPeripheral implements IPeripheral {
         result.put("chunk_z", data.chunkZ());
         result.put("loaded", clm.isLoaded(id));
 
+        int range = data.range();
+        if (range > 0) {
+            result.put("range", range);
+            result.put("loaded_chunks", range * range);
+        }
+
         Long expiresAt = clm.getExpiresAt(id);
         if (expiresAt != null) {
             long currentTime = serverLevel.getGameTime();

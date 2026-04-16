@@ -27,16 +27,17 @@
 
 ComputerCraft Wake Nodes est un mod Forge pour Minecraft 1.20.1 qui ajoute un petit réseau de chargement de chunks pour les ordinateurs CC: Tweaked (ComputerCraft), particulièrement utile pour des montages d'automatisation.
 
-Il introduit deux périphériques ComputerCraft :
+Il introduit trois périphériques ComputerCraft :
 
 - `wake_node` : attaché à un ordinateur ComputerCraft et enregistré sous un ID de chaîne, servant essentiellement de chargeur de chunk.
+- `wake_node_advanced` : une version améliorée de `wake_node` qui permet de choisir la zone chargée (1×1, 3×3 ou 5×5 chunks).
 - `wake_controller` : utilisé par un autre ordinateur pour lister, charger, décharger et inspecter les noeuds enregistrés.
 
 Le cas d'utilisation principal est de réveiller des installations d'ordinateurs distants assez longtemps pour que leur chunk se charge et s'exécute (tick), permettant à leur logique de démarrage de s'exécuter.
 
 Il ajoute également le Wake Chip, un composant utilisé pour crafter les autres blocs.
 
-Si Create est installé, des recettes Create personnalisées sont fournies pour le Wake Chip, la Wake Node et le Wake Controller.
+Si Create est installé, des recettes Create personnalisées sont fournies pour le Wake Chip, la Wake Node, l'Advanced Wake Node et le Wake Controller.
 
 ## Fonctionnalités
 
@@ -87,6 +88,35 @@ Recette :
 
 Onglet Créatif : Functional Blocks
 
+### Advanced Wake Node
+
+Une Wake Node améliorée qui permet de choisir la zone chargée autour de l'ordinateur attaché :
+
+- **1×1** — 1 chunk (identique à une Wake Node basique)
+- **3×3** — 9 chunks
+- **5×5** — 25 chunks
+
+Elle hérite de toutes les fonctionnalités de la Wake Node basique et ajoute les méthodes `setRange()`, `getRange()` et `listAvailableRanges()`.
+
+Recette (même forme que la Wake Node, mais avec de la netherite au lieu du fer) :
+
+```
++---+---+---+
+| N | R | N |
++---+---+---+
+| A | C | A |
++---+---+---+
+| N | R | N |
++---+---+---+
+
+N = Lingot de Netherite
+R = Redstone
+A = Éclat d'Améthyste
+C = Wake Chip
+```
+
+Onglet Créatif : Functional Blocks
+
 ### Wake Controller
 
 Un bloc périphérique utilisé par un ordinateur contrôleur pour gérer les Wake Nodes enregistrés.
@@ -125,6 +155,7 @@ Les enregistrements de noeuds sont sauvegardés, mais les chunks forcés actifs 
 ### Types de périphériques
 
 - Type de périphérique Wake Node : `wake_node`
+- Type de périphérique Advanced Wake Node : `wake_node_advanced`
 - Type de périphérique Wake Controller : `wake_controller`
 
 ### API Wake Node
@@ -222,6 +253,61 @@ Retourne une table avec l'ID du noeud et les informations de chunk :
 
 Si aucun ID n'a encore été assigné, `id` est retourné comme chaîne vide.
 
+### API Advanced Wake Node
+
+L'Advanced Wake Node expose le type de périphérique `wake_node_advanced`. Elle hérite de toutes les méthodes de la Wake Node basique et ajoute les suivantes :
+
+```lua
+local wake = peripheral.find("wake_node_advanced")
+```
+
+#### `setRange(size)`
+
+Définit la zone chargée autour de l'ordinateur.
+
+- `size` doit être `1`, `3` ou `5`
+- seul l'ordinateur propriétaire peut appeler cette méthode
+- si le noeud est actuellement chargé, le jeu de chunks est mis à jour en direct (sauf si désactivé par la config)
+- déclenche une erreur si la valeur dépasse le maximum serveur ou si l'appelant n'est pas le propriétaire
+
+Exemple :
+
+```lua
+wake.setRange(5) -- charger une zone 5×5 (25 chunks)
+```
+
+#### `getRange()`
+
+Retourne la taille actuelle du range (`1`, `3` ou `5`).
+
+```lua
+print(wake.getRange()) -- 3
+```
+
+#### `listAvailableRanges()`
+
+Retourne un tableau des valeurs de range autorisées selon la configuration du serveur.
+
+```lua
+local ranges = wake.listAvailableRanges()
+-- { 1, 3, 5 }
+```
+
+#### `getInfo()` (surchargé)
+
+Retourne la même table que le `getInfo()` basique avec deux champs supplémentaires :
+
+```lua
+{
+	id = "remote_factory",
+	dimension = "minecraft:overworld",
+	chunk_x = 12,
+	chunk_z = -4,
+	range = 3,
+	loaded_chunks = 9
+}
+```
+
 ### API Wake Controller
 
 Trouvez le périphérique avec les appels standard ComputerCraft tels que :
@@ -266,6 +352,7 @@ Remarques :
 - `loaded` est un booléen
 - `expires_at` n'est présent que pour les chargements temporaires
 - `expires_at` est rapporté en secondes restantes, pas en timestamp absolu
+- pour les Advanced Wake Nodes, la table inclut aussi `range` (1, 3 ou 5) et `loaded_chunks` (1, 9 ou 25)
 
 #### `loadNode(id)`
 
@@ -348,6 +435,10 @@ Clés de configuration serveur :
 - `chunk_loading.max_load_duration_seconds` : durée maximale acceptée par `loadFor`. Par défaut : `300`
 - `chunk_loading.default_load_radius` : rayon en chunks autour de l'ordinateur cible. `0` signifie uniquement le chunk propre de l'ordinateur. Par défaut : `0`
 - `chunk_loading.chunk_ops_per_tick` : nombre maximal d'opérations de mise en file (chargement/déchargement) traitées chaque tick serveur. Des valeurs plus faibles lissent les pics mais réveillent les noeuds plus lentement. Par défaut : `3`
+- `advanced_wake_node.enabled` : active le bloc Advanced Wake Node. Par défaut : `true`
+- `advanced_wake_node.default_range` : range par défaut pour les Advanced Wake Nodes nouvellement placées (1, 3 ou 5). Par défaut : `3`
+- `advanced_wake_node.max_range` : range maximum autorisé (1, 3 ou 5). Par défaut : `5`
+- `advanced_wake_node.allow_range_change_while_loaded` : autorise le changement de range pendant que le noeud est chargé. Par défaut : `true`
 
 Clés de configuration communes :
 

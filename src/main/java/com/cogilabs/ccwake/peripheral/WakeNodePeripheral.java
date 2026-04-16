@@ -21,10 +21,14 @@ import java.util.Map;
 
 public class WakeNodePeripheral implements IPeripheral {
 
-    private final WakeNodeBlockEntity blockEntity;
+    protected final WakeNodeBlockEntity blockEntity;
 
     public WakeNodePeripheral(WakeNodeBlockEntity blockEntity) {
         this.blockEntity = blockEntity;
+    }
+
+    protected int getNodeRange() {
+        return 0;
     }
 
     @Override
@@ -68,7 +72,7 @@ public class WakeNodePeripheral implements IPeripheral {
             throw new LuaException("Node id '" + id + "' is already registered to another computer");
         }
 
-        registry.registerNode(id, dimension, nodePos, computerPos, chunkX, chunkZ, attachFace, callerComputerId);
+        registry.registerNode(id, dimension, nodePos, computerPos, chunkX, chunkZ, attachFace, callerComputerId, getNodeRange());
         blockEntity.setNodeId(id);
     }
 
@@ -93,7 +97,7 @@ public class WakeNodePeripheral implements IPeripheral {
     }
 
     @LuaFunction
-    public final @Nullable Map<String, Object> getInfo() {
+    public @Nullable Map<String, Object> getInfo() {
         String id = blockEntity.getNodeId();
         Level level = blockEntity.getLevel();
         if (level == null) return null;
@@ -172,7 +176,7 @@ public class WakeNodePeripheral implements IPeripheral {
     }
 
 
-    private int getCallerComputerId(IComputerAccess computer) throws LuaException {
+    protected int getCallerComputerId(IComputerAccess computer) throws LuaException {
         int id = computer.getID();
         if (id <= 0) {
             throw new LuaException("Unable to resolve caller computer id");
@@ -180,7 +184,7 @@ public class WakeNodePeripheral implements IPeripheral {
         return id;
     }
 
-    private WakeNodeRegistry getRegistry() throws LuaException {
+    protected WakeNodeRegistry getRegistry() throws LuaException {
         Level level = blockEntity.getLevel();
         if (!(level instanceof ServerLevel serverLevel) || level.isClientSide) {
             throw new LuaException("Node not available");
@@ -188,7 +192,7 @@ public class WakeNodePeripheral implements IPeripheral {
         return WakeNodeRegistry.get(serverLevel);
     }
 
-    private String requireNodeId() throws LuaException {
+    protected String requireNodeId() throws LuaException {
         String nodeId = blockEntity.getNodeId();
         if (nodeId == null || nodeId.isBlank()) {
             throw new LuaException("Node is not registered. Call setId first.");
@@ -196,7 +200,7 @@ public class WakeNodePeripheral implements IPeripheral {
         return nodeId;
     }
 
-    private WakeNodeRegistry.NodeData requireOwnershipOrClaimLegacy(WakeNodeRegistry registry, String nodeId, int callerComputerId) throws LuaException {
+    protected WakeNodeRegistry.NodeData requireOwnershipOrClaimLegacy(WakeNodeRegistry registry, String nodeId, int callerComputerId) throws LuaException {
         WakeNodeRegistry.NodeData node = registry.getNode(nodeId);
         if (node == null) {
             throw new LuaException("Node not registered");
